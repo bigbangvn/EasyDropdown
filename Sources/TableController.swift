@@ -13,7 +13,7 @@ open class TableController: UIViewController, UITableViewDataSource, UITableView
       }
     }
   }
-  var selectedIndex: Int
+  public var selectedIndex: Int // If input value < 0 => disable selection mark
   lazy var topView: UIView = self.makeTopView()
 
   // MARK: - Initialization
@@ -111,14 +111,15 @@ open class TableController: UIViewController, UITableViewDataSource, UITableView
 
   open func tableView(_ tableView: UITableView,
                         didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
+    if selectedIndex >= 0 {
+        tableView.deselectRow(at: indexPath, animated: true)
 
-    let previousIndexPath = IndexPath(row: selectedIndex, section: 0)
-    selectedIndex = (indexPath as NSIndexPath).row
-    let selectedIndexPath = IndexPath(row: selectedIndex, section: 0)
+        let previousIndexPath = IndexPath(row: selectedIndex, section: 0)
+        selectedIndex = (indexPath as NSIndexPath).row
+        let selectedIndexPath = IndexPath(row: selectedIndex, section: 0)
 
-    tableView.reloadRows(at: [previousIndexPath, selectedIndexPath], with: .automatic)
-
+        tableView.reloadRows(at: [previousIndexPath, selectedIndexPath], with: .automatic)
+    }
     action?((indexPath as NSIndexPath).row)
   }
 
