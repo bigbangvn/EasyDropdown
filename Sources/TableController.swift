@@ -111,9 +111,8 @@ open class TableController: UIViewController, UITableViewDataSource, UITableView
 
   open func tableView(_ tableView: UITableView,
                         didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
     if selectedIndex >= 0 {
-        tableView.deselectRow(at: indexPath, animated: true)
-
         let previousIndexPath = IndexPath(row: selectedIndex, section: 0)
         selectedIndex = (indexPath as NSIndexPath).row
         let selectedIndexPath = IndexPath(row: selectedIndex, section: 0)
